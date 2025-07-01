@@ -1,73 +1,73 @@
 # Job Scraper Backend
 
-Modern, modular ve SOLID prensiplerine uygun job scraper backend uygulaması.
+Modern, modular backend application following SOLID principles for intelligent job analysis and resume matching.
 
-## 🏗️ Mimari
+## 🏗️ Architecture
 
-Bu backend uygulaması aşağıdaki software engineering prensiplerine uygun olarak tasarlanmıştır:
+This backend application is designed following software engineering best practices:
 
-### SOLID Prensipleri
+### SOLID Principles
 
-- **Single Responsibility Principle (SRP)**: Her sınıf ve modül tek bir sorumluluğa sahiptir
-- **Open/Closed Principle (OCP)**: Kod genişletmeye açık, değişikliğe kapalıdır
-- **Liskov Substitution Principle (LSP)**: Interface'ler doğru şekilde implement edilir
-- **Interface Segregation Principle (ISP)**: Küçük, odaklanmış interface'ler kullanılır
-- **Dependency Inversion Principle (DIP)**: Yüksek seviye modüller düşük seviye modüllere bağımlı değildir
+- **Single Responsibility Principle (SRP)**: Each class and module has a single responsibility
+- **Open/Closed Principle (OCP)**: Code is open for extension, closed for modification
+- **Liskov Substitution Principle (LSP)**: Interfaces are properly implemented and substitutable
+- **Interface Segregation Principle (ISP)**: Small, focused interfaces are used
+- **Dependency Inversion Principle (DIP)**: High-level modules are not dependent on low-level modules
 
-### Diğer Prensipler
+### Other Principles
 
-- **DRY (Don't Repeat Yourself)**: Kod tekrarı minimize edilir
-- **KISS (Keep It Simple, Stupid)**: Basit ve anlaşılır kod yazılır
-- **YAGNI (You Aren't Gonna Need It)**: Sadece gerekli olan özellikler implement edilir
+- **DRY (Don't Repeat Yourself)**: Code duplication is minimized
+- **KISS (Keep It Simple, Stupid)**: Simple and understandable code is written
+- **YAGNI (You Aren't Gonna Need It)**: Only necessary features are implemented
 
-## 📁 Dosya Yapısı
+## 📁 Project Structure
 
 ```
 backend/
 ├── src/
-│   ├── core/                 # Temel interface'ler ve abstract sınıflar
+│   ├── core/                 # Core interfaces and abstract classes
 │   │   ├── __init__.py
 │   │   └── interfaces.py     # IJobScraper, IMatchCalculator, IJobAnalyzer
-│   ├── models/               # Data modelleri
+│   ├── models/               # Data models
 │   │   ├── __init__.py
 │   │   └── job_models.py     # JobData, MatchScore, JobResult
-│   ├── services/             # İş mantığı servisleri
+│   ├── services/             # Business logic services
 │   │   ├── __init__.py
-│   │   ├── scraper_service.py     # Web scraping
-│   │   ├── match_service.py       # Job matching
+│   │   ├── scraper_service.py     # Web scraping service
+│   │   ├── match_service.py       # Job matching service
 │   │   └── analyzer_service.py    # Workflow orchestration
-│   ├── utils/                # Yardımcı fonksiyonlar
+│   ├── utils/                # Helper utilities
 │   │   ├── __init__.py
 │   │   └── helpers.py        # Text processing, validation
-│   ├── config/               # Konfigürasyon
+│   ├── config/               # Configuration
 │   │   ├── __init__.py
-│   │   └── settings.py       # Uygulama ayarları
+│   │   └── settings.py       # Application settings
 │   ├── api/                  # Flask API endpoints
 │   │   ├── __init__.py
-│   │   └── routes.py         # HTTP route'ları
-│   ├── main.py               # Ana uygulama giriş noktası
+│   │   └── routes.py         # HTTP routes
+│   ├── main.py               # Main application entry point
 │   ├── lambda_adapter.py     # AWS Lambda adapter
 │   └── __init__.py
 ├── requirements.txt          # Python dependencies
-└── README.md                # Bu dosya
+└── README.md                # This file
 ```
 
-## 🚀 Kullanım
+## 🚀 Usage
 
-### Yerel Geliştirme
+### Local Development
 
-1. **Dependencies yükleyin:**
+1. **Install dependencies:**
    ```bash
    cd backend
    pip install -r requirements.txt
    ```
 
-2. **Uygulamayı başlatın:**
+2. **Start the application:**
    ```bash
    python src/main.py
    ```
 
-3. **API endpoint'i:**
+3. **API endpoint:**
    ```
    http://localhost:5001/analyze
    ```
@@ -75,12 +75,12 @@ backend/
 ### Environment Variables
 
 ```bash
-# Server konfigürasyonu
+# Server configuration
 HOST=0.0.0.0
 PORT=5001
 DEBUG=True
 
-# Request ayarları
+# Request settings
 REQUEST_TIMEOUT=10
 MAX_CONTENT_LENGTH=1048576
 MAX_LINKS_PER_REQUEST=10
@@ -91,7 +91,7 @@ ENVIRONMENT=development  # development, production, lambda
 
 ### AWS Lambda Deployment
 
-Lambda için `lambda_adapter.py` dosyasını kullanın:
+Use `lambda_adapter.py` for Lambda deployment:
 
 ```python
 from lambda_adapter import lambda_handler
@@ -101,7 +101,7 @@ from lambda_adapter import lambda_handler
 
 ### POST /analyze
 
-Job analizi yapar.
+Performs job analysis.
 
 **Request:**
 ```json
@@ -137,7 +137,7 @@ Job analizi yapar.
 
 ### GET /health
 
-Sağlık kontrolü.
+Health check endpoint.
 
 **Response:**
 ```json
@@ -148,39 +148,39 @@ Sağlık kontrolü.
 }
 ```
 
-## 🏗️ Genişletme
+## 🏗️ Extending the System
 
-### Yeni Scraper Eklemek
+### Adding a New Scraper
 
-1. `IJobScraper` interface'ini implement edin
-2. Yeni service'i `services/` klasörüne ekleyin
-3. `main.py`'de dependency injection ile kullanın
+1. Implement the `IJobScraper` interface
+2. Add the new service to the `services/` directory
+3. Use dependency injection in `main.py`
 
-### Yeni Matching Algorithm Eklemek
+### Adding a New Matching Algorithm
 
-1. `IMatchCalculator` interface'ini implement edin
-2. `services/match_service.py`'i genişletin veya yeni service oluşturun
+1. Implement the `IMatchCalculator` interface
+2. Extend `services/match_service.py` or create a new service
 
-### Yeni API Endpoint Eklemek
+### Adding a New API Endpoint
 
-1. `api/routes.py`'e yeni method ekleyin
-2. Gerekirse yeni blueprint oluşturun
+1. Add a new method to `api/routes.py`
+2. Create a new blueprint if necessary
 
-## 🧪 Test
+## 🧪 Testing
 
 ```bash
-# Unit testler
+# Unit tests
 pytest tests/
 
 # Coverage
 pytest --cov=src tests/
 ```
 
-## 📝 Önemli Değişiklikler
+## 📝 Important Changes
 
-- Monolitik `local_api_server.py` modüler yapıya dönüştürüldü
-- SOLID prensiplerine uygun interface'ler eklendi
-- Dependency injection pattern'i kullanıldı
-- Comprehensive error handling eklendi
-- Configurable settings sistemi oluşturuldu
-- Lambda deployment için adapter pattern kullanıldı
+- Monolithic `local_api_server.py` refactored to modular architecture
+- SOLID principle-compliant interfaces added
+- Dependency injection pattern implemented
+- Comprehensive error handling added
+- Configurable settings system created
+- Adapter pattern used for Lambda deployment

@@ -335,115 +335,18 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 </div>
 
-```
-job_scraper_full_system/
-├── backend/                          # Python Flask Backend
-│   ├── src/
-│   │   ├── core/                    # Abstract classes & interfaces
-│   │   │   └── interfaces.py        # IJobScraper, IMatchCalculator
-│   │   ├── models/                  # Data models
-│   │   │   └── job_models.py        # JobData, MatchScore, JobResult
-│   │   ├── services/                # Business logic services
-│   │   │   ├── scraper_service.py   # Web scraping service
-│   │   │   ├── match_service.py     # Job matching service
-│   │   │   └── analyzer_service.py  # Workflow orchestration
-│   │   ├── utils/                   # Helper utilities
-│   │   │   └── helpers.py           # Text processing, validation
-│   │   ├── config/                  # Configuration
-│   │   │   └── settings.py          # App settings & environments
-│   │   ├── api/                     # Flask API endpoints
-│   │   │   └── routes.py            # HTTP routes
-│   │   ├── main.py                  # Main application entry
-│   │   └── lambda_adapter.py        # AWS Lambda adapter
-│   ├── requirements.txt             # Python dependencies
-│   └── README.md                    # Backend documentation
-├── job-scraper-frontend/            # Next.js Frontend
-│   ├── src/
-│   │   ├── app/                     # Next.js app router
-│   │   ├── components/              # React components
-│   │   │   ├── JobBotUI.tsx         # Main UI component
-│   │   │   ├── JobCard.tsx          # Job display component
-│   │   │   ├── JobFilters.tsx       # Filtering component
-│   │   │   ├── StatsOverview.tsx    # Statistics component
-│   │   │   └── ui/                  # Reusable UI components
-│   │   ├── hooks/                   # Custom React hooks
-│   │   │   ├── useJobAnalysis.ts    # Job analysis logic
-│   │   │   └── useResumeProcessing.ts # Resume processing
-│   │   ├── lib/                     # Utility libraries
-│   │   │   ├── jobUtils.ts          # Job-related utilities
-│   │   │   ├── pdfUtils.ts          # PDF processing
-│   │   │   ├── constants.ts         # App constants
-│   │   │   └── utils.ts             # General utilities
-│   │   └── types/                   # TypeScript type definitions
-│   ├── package.json
-│   └── README.md
-├── local_api_server.py              # DEPRECATED - Legacy compatibility
-├── lambda_function.py               # DEPRECATED - Legacy compatibility
-├── API_ENDPOINT_GUIDE.md
-├── REFACTORING_GUIDE.md
-└── README.md                        # This file
-```
+## � Documentation
 
-## 🚀 Hızlı Başlangıç
+- [Backend README](backend/README.md) - Detailed backend documentation
+- [Frontend README](job-scraper-frontend/README.md) - Frontend documentation  
+- [API Guide](API_ENDPOINT_GUIDE.md) - API usage guide
+- [Refactoring Guide](REFACTORING_GUIDE.md) - Refactoring documentation
 
-### 1. Backend Kurulumu
+## � Migration from Legacy
 
-```bash
-cd backend
-pip install -r requirements.txt
-python src/main.py
-```
+Legacy `local_api_server.py` and `lambda_function.py` files are kept for backward compatibility but marked as DEPRECATED. Use the new modular backend.
 
-Backend çalışacak: `http://localhost:5001`
-
-### 2. Frontend Kurulumu
-
-```bash
-cd job-scraper-frontend
-npm install
-npm run dev
-```
-
-Frontend çalışacak: `http://localhost:3000`
-
-### 3. Environment Konfigürasyonu
-
-**Backend (.env):**
-```bash
-ENVIRONMENT=development
-HOST=0.0.0.0
-PORT=5001
-DEBUG=True
-REQUEST_TIMEOUT=10
-MAX_LINKS_PER_REQUEST=10
-```
-
-**Frontend (.env.local):**
-```bash
-NEXT_PUBLIC_API_ENDPOINT=http://localhost:5001/analyze
-```
-
-## 💡 Özellikler
-
-### Backend
-- ✅ Modular SOLID architecture
-- ✅ Dependency injection pattern
-- ✅ Comprehensive error handling
-- ✅ Multiple environment support
-- ✅ AWS Lambda compatibility
-- ✅ Configurable settings
-- ✅ Clean separation of concerns
-
-### Frontend
-- ✅ Modern React with TypeScript
-- ✅ Custom hooks for state management
-- ✅ Modular component architecture
-- ✅ PDF resume processing
-- ✅ Real-time job analysis
-- ✅ Advanced filtering and sorting
-- ✅ Responsive design
-
-## 📡 API Kullanımı
+## � API Usage
 
 ### Job Analysis Endpoint
 
@@ -485,32 +388,32 @@ Content-Type: application/json
 }
 ```
 
-## 🏗️ Mimari Kararları
+## 🏗️ Architecture Decisions
 
 ### Backend Architecture
 
-1. **Interface Segregation**: Her service kendi interface'ini implement eder
-2. **Dependency Injection**: Services constructor'larda inject edilir
-3. **Factory Pattern**: ApplicationFactory ana uygulamayı oluşturur
-4. **Adapter Pattern**: Lambda deployment için adapter kullanılır
-5. **Strategy Pattern**: Farklı environment'lar için farklı config'ler
+1. **Interface Segregation**: Each service implements its own interface
+2. **Dependency Injection**: Services are injected in constructors
+3. **Factory Pattern**: ApplicationFactory creates the main application
+4. **Adapter Pattern**: Adapter used for Lambda deployment
+5. **Strategy Pattern**: Different configs for different environments
 
 ### Frontend Architecture
 
-1. **Custom Hooks**: Business logic React hook'larında
-2. **Component Composition**: Küçük, yeniden kullanılabilir component'ler
+1. **Custom Hooks**: Business logic in React hooks
+2. **Component Composition**: Small, reusable components
 3. **Type Safety**: Comprehensive TypeScript typing
-4. **Separation of Concerns**: UI, business logic ve utils ayrı
+4. **Separation of Concerns**: UI, business logic, and utils separated
 5. **Constants Management**: Centralized constants file
 
-## 🛠️ Geliştirme
+## 🛠️ Development
 
-### Yeni Feature Ekleme
+### Adding New Features
 
-1. **Backend**: Interface oluştur → Service implement et → API endpoint ekle
-2. **Frontend**: Type tanımla → Hook oluştur → Component geliştir
+1. **Backend**: Create interface → Implement service → Add API endpoint
+2. **Frontend**: Define types → Create hook → Develop component
 
-### Test Yazma
+### Writing Tests
 
 ```bash
 # Backend
@@ -534,7 +437,46 @@ npm run lint
 npm run type-check
 ```
 
-## 📦 Deployment
+## � Quick Development Setup
+
+### 1. Backend Setup
+
+```bash
+cd backend
+pip install -r requirements.txt
+python src/main.py
+```
+
+Backend will run on: `http://localhost:5001`
+
+### 2. Frontend Setup
+
+```bash
+cd job-scraper-frontend
+npm install
+npm run dev
+```
+
+Frontend will run on: `http://localhost:3000`
+
+### 3. Environment Configuration
+
+**Backend (.env):**
+```bash
+ENVIRONMENT=development
+HOST=0.0.0.0
+PORT=5001
+DEBUG=True
+REQUEST_TIMEOUT=10
+MAX_LINKS_PER_REQUEST=10
+```
+
+**Frontend (.env.local):**
+```bash
+NEXT_PUBLIC_API_ENDPOINT=http://localhost:5001/analyze
+```
+
+## ⚡ Deployment Options
 
 ### Development
 ```bash
@@ -549,35 +491,4 @@ gunicorn -c gunicorn.conf.py src.main:app  # Backend
 ```
 
 ### AWS Lambda
-`backend/src/lambda_adapter.py` dosyasını Lambda'ya deploy edin.
-
-## 📚 Belgeler
-
-- [Backend README](backend/README.md) - Detaylı backend belgeleri
-- [Frontend README](job-scraper-frontend/README.md) - Frontend belgeleri
-- [API Guide](API_ENDPOINT_GUIDE.md) - API kullanım kılavuzu
-- [Refactoring Guide](REFACTORING_GUIDE.md) - Refactoring belgeleri
-
-## 🔄 Migration from Legacy
-
-Eski `local_api_server.py` ve `lambda_function.py` dosyları backward compatibility için korunmuştur ancak DEPRECATED olarak işaretlenmiştir. Yeni modular backend'i kullanın.
-
-## 🚀 Teknolojiler
-
-### Backend
-- Python 3.8+
-- Flask 3.0+
-- Beautiful Soup 4
-- Requests
-- AWS Lambda (Optional)
-
-### Frontend  
-- Next.js 15
-- React 18
-- TypeScript
-- Tailwind CSS
-- PDF.js
-
-## 📝 License
-
-MIT License
+Deploy `backend/src/lambda_adapter.py` to Lambda.

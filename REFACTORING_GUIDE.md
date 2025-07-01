@@ -1,32 +1,32 @@
 # Job Scraper Refactoring Guide
 
-Bu belge, job scraper projesinin software engineering prensiplerine uygun hale getirilmesi sürecini açıklar.
+This document explains the process of refactoring the job scraper project to comply with software engineering principles.
 
-## 🎯 Refactoring Amaçları
+## 🎯 Refactoring Objectives
 
-### 1. SOLID Prensipleri Uygulanması
+### 1. SOLID Principles Implementation
 - **Single Responsibility Principle (SRP)** ✅
 - **Open/Closed Principle (OCP)** ✅
 - **Liskov Substitution Principle (LSP)** ✅
 - **Interface Segregation Principle (ISP)** ✅
 - **Dependency Inversion Principle (DIP)** ✅
 
-### 2. Diğer Best Practices
+### 2. Other Best Practices
 - **DRY (Don't Repeat Yourself)** ✅
 - **KISS (Keep It Simple, Stupid)** ✅
 - **YAGNI (You Aren't Gonna Need It)** ✅
 
-## 🔄 Yapılan Değişiklikler
+## 🔄 Changes Made
 
 ### Backend Refactoring
 
-#### Before: Monolitik Yapı
+#### Before: Monolithic Structure
 ```
-local_api_server.py  # Tüm kod tek dosyada (269 satır)
-lambda_function.py   # Tekrarlanan kod (155 satır)
+local_api_server.py  # All code in one file (269 lines)
+lambda_function.py   # Duplicated code (155 lines)
 ```
 
-#### After: Modular Yapı
+#### After: Modular Structure
 ```
 backend/src/
 ├── core/interfaces.py          # Abstract classes & interfaces
@@ -130,7 +130,7 @@ analyzer2 = create_analyzer(advanced_scraper, matcher)
 
 ### 4. Interface Segregation Principle (ISP)
 
-**Küçük, Odaklanmış Interface'ler:**
+**Small, Focused Interfaces:**
 ```python
 class IJobScraper(ABC):
     def extract_job_data(self, url: str) -> JobData: pass

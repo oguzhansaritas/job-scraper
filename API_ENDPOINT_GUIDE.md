@@ -1,20 +1,20 @@
-# AWS API Endpoint Değiştirme Rehberi
+# AWS API Endpoint Configuration Guide
 
-## 🔄 Mevcut Durum
-- Sistem şu anda mock API kullanıyor (USE_MOCK_API = false oldu)
-- Environment variable ile endpoint yönetimi eklendi
+## 🔄 Current Status
+- System currently uses the configured API endpoint
+- Environment variable management for endpoint configuration added
 
-## 🛠️ Endpoint Değiştirme Seçenekleri
+## 🛠️ Endpoint Configuration Options
 
-### 1. Environment Variable ile (.env.local)
+### 1. Environment Variable (.env.local)
 ```bash
-# .env.local dosyasını düzenleyin:
+# Edit .env.local file:
 NEXT_PUBLIC_API_ENDPOINT=https://YOUR-NEW-API-ID.execute-api.REGION.amazonaws.com/STAGE
 ```
 
-### 2. AWS API Gateway Yeni Endpoint
+### 2. AWS API Gateway New Endpoint
 ```bash
-# AWS CLI ile yeni API Gateway oluşturma:
+# Create new API Gateway with AWS CLI:
 aws apigateway create-rest-api --name job-scraper-api-v2
 aws lambda create-function --function-name job-scraper-v2 --runtime python3.9
 ```
@@ -22,17 +22,17 @@ aws lambda create-function --function-name job-scraper-v2 --runtime python3.9
 ### 3. Local Python API (For Testing)
 ```bash
 # Run local API server:
-cd /Users/oguzhansaritas/Downloads/job_scraper_full_system
-pip install flask flask-cors requests beautifulsoup4
-python local_api_server.py
+cd backend
+pip install -r requirements.txt
+python src/main.py
 
-# .env.local'da:
-NEXT_PUBLIC_API_ENDPOINT=http://localhost:5000/analyze
+# In .env.local:
+NEXT_PUBLIC_API_ENDPOINT=http://localhost:5001/analyze
 ```
 
 ### 4. Vercel/Netlify Serverless Function
 ```bash
-# Vercel ile deploy:
+# Deploy with Vercel:
 npm i -g vercel
 vercel --prod
 
@@ -40,14 +40,14 @@ vercel --prod
 NEXT_PUBLIC_API_ENDPOINT=https://your-project.vercel.app/api/analyze
 ```
 
-## 🧪 Test Etme
-1. .env.local dosyasını düzenleyin
-2. Development sunucusunu yeniden başlatın: `npm run dev`
-3. Browser console'da "Kullanılan API endpoint:" logunu kontrol edin
-4. Gerçek linklerle test edin
+## 🧪 Testing
+1. Edit the .env.local file
+2. Restart development server: `npm run dev`
+3. Check "Using API endpoint:" log in browser console
+4. Test with real job posting links
 
-## ⚠️ Önemli Notlar
-- Environment değişkenleri değiştirildiğinde sunucuyu yeniden başlatın
+## ⚠️ Important Notes
+- Restart the server when environment variables are changed
 - CORS ayarlarının doğru olduğundan emin olun
 - API endpoint'inin POST metodunu desteklediğini kontrol edin
 - Request body formatının uyumlu olduğunu doğrulayın
